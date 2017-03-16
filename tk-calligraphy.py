@@ -1,23 +1,36 @@
+#!/usr/bin/env python3
 # For Python2 use Tkinter instead of tkinter
 
-# Forked from https://funpython.wordpress.com/2015/11/08/simple-drawing-program-part-1/
-
+# Module Imports
 from tkinter import *
-from random import randint
+from random  import randint
+import math
 
-# Layout variables 
+# Layout Variables
+canvasWidth  = 768
+canvasHeight = 512 
 padx = 2
 pady = 2
 
-# Color variables
-lightestGrey = "#%02x%02x%02x" % (230, 230, 230)
+# Color Variables
+lightestGray = "#%02x%02x%02x" % (230, 230, 230)
 lightGray    = "#%02x%02x%02x" % (200, 200, 200)
 mediumGray   = "#%02x%02x%02x" % (150, 150, 150)
 darkGray     = "#%02x%02x%02x" % (100, 100, 100)
-darkestGray  = "#%02x%02x%02x" % (50, 50, 50)
+darkestGray  = "#%02x%02x%02x" % ( 50,  50,  50)
+colorRed     = "#%02x%02x%02x" % (250,  50,  50)
+colorOrange  = "#%02x%02x%02x" % (250, 100,  50)
+colorYellow  = "#%02x%02x%02x" % (255, 200,  50)
+colorGreen   = "#%02x%02x%02x" % (150, 250, 230)
+colorBlue    = "#%02x%02x%02x" % (230, 230, 230)
+colorPurple  = "#%02x%02x%02x" % ( 30,  30, 250)
 
 # Default Settings
-brushStartColor = darkGray
+brushStartColor = colorRed
+widgetsBgColor  = lightGray 
+
+# Wip
+center = (canvasWidth / 2), (canvasHeight / 2)
 
 class Application(Frame):
 
@@ -33,14 +46,15 @@ class Application(Frame):
 
         master.bind('d', self.thicknessPlus)
         master.bind('a', self.thicknessMinus)
+        master.bind('s', self.rotateBrush)
+        master.bind('w', self.rotateBrush)
 
     def createWidgets(self):
-        tk_rgb = mediumGray
 
-        self.leftFrame = Frame(self, bg = tk_rgb)
+        self.leftFrame = Frame(self, bg = widgetsBgColor)
         self.leftFrame.pack(side = LEFT, fill = Y)
 
-        self.label = Label(self.leftFrame, text = "choose a RGB color: ")
+        self.label = Label(self.leftFrame, text = "choose a RGB color: ", fg="red")
         self.label.grid(row = 0, column = 0, sticky = NW, pady = 2, padx = 3)
 
         #-----------------------------------------------
@@ -83,6 +97,7 @@ class Application(Frame):
         self.labelTools = Label(
                                 self.leftFrame,
                                 text = "chose a drawing tool:",
+                                bg = mediumGray
                                 )
         self.labelTools.grid(
                              row = 6, column = 0,
@@ -92,13 +107,15 @@ class Application(Frame):
 
         Radiobutton(self.leftFrame,
                     text = "Bamboo",
+                    bg = mediumGray,
                     variable = self.radiobuttonValue,
                     value = 1).grid(padx = padx, pady = pady,
                                     row = 7, column = 0,
-                                    sticky = NW
+                                    sticky = NW,
                                     )
         Radiobutton(self.leftFrame,
                     text = "Magic #1",
+                    bg = mediumGray,
                     variable = self.radiobuttonValue,
                     value = 2).grid(padx = padx, pady = pady,
                                     row = 8, column = 0,
@@ -111,13 +128,19 @@ class Application(Frame):
                                     row = 11, column = 0,
                                     sticky = NW)
 
+
 #----------------------------------------------------------------------
         self.myCanvas = Canvas(self, width = 768,
-                                height = 512, relief=FLAT, borderwidth=0, background=lightGray)
+                                     height = 512, 
+                                     relief=FLAT, 
+                                     borderwidth=0, 
+                                     bg=lightestGray
+                                     )
         self.myCanvas.pack(side = RIGHT)
         self.myCanvas.bind("<B1-Motion>", self.draw)
         self.myCanvas.bind("<Button-1>", self.setPreviousXY)
 #----------------------------------------------------------------------
+
 
     def setThickness(self, event):
         print(self.myScale.get())
@@ -144,7 +167,10 @@ class Application(Frame):
             self.previousX = event.x
             self.previousY = event.y
 
+
+    # Drawing Tools
     def draw(self, event):
+        
         # Bamboo
         if self.radiobuttonValue.get() == 1:
             self.myCanvas.create_rectangle(event.x - self.toolsThickness,
@@ -157,11 +183,11 @@ class Application(Frame):
         # Magic
         if self.radiobuttonValue.get() == 2:
             self.myCanvas.create_rectangle(event.x - self.toolsThickness,
-                                           (event.y / 2) - self.toolsThickness,
-                                           (event.x / 2) + self.toolsThickness,
-                                           event.y + self.toolsThickness,
-                                           fill = self.rgb 
-                                           )
+                                          (event.y / 2) - self.toolsThickness,
+                                          (event.x / 2) + self.toolsThickness,
+                                          event.y + self.toolsThickness,
+                                          fill = self.rgb 
+                                          )
 
     def delteAll(self):
         self.myCanvas.delete("all")
@@ -175,6 +201,10 @@ class Application(Frame):
         if 1 < self.toolsThickness:
             self.toolsThickness -= 1
             self.myScale.set(self.toolsThickness)
+
+    def rotateBrush(self, event):
+        # rotate the brush 
+        print ("rotate!")
 
 root = Tk()
 root.title("Tk Calligraphy")
