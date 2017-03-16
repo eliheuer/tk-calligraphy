@@ -97,6 +97,13 @@ class Application(Frame):
                                     row = 7, column = 0,
                                     sticky = NW
                                     )
+        Radiobutton(self.leftFrame,
+                    text = "Magic #1",
+                    variable = self.radiobuttonValue,
+                    value = 2).grid(padx = padx, pady = pady,
+                                    row = 8, column = 0,
+                                    sticky = NW
+                                    )
 
         self.buttonDeleteAll = Button(self.leftFrame, text = "clear paper",
                                       command = self.delteAll)
@@ -143,6 +150,15 @@ class Application(Frame):
             self.myCanvas.create_rectangle(event.x - self.toolsThickness,
                                            event.y - self.toolsThickness,
                                            event.x + self.toolsThickness,
+                                           event.y + self.toolsThickness,
+                                           fill = self.rgb 
+                                           )
+
+        # Magic
+        if self.radiobuttonValue.get() == 2:
+            self.myCanvas.create_rectangle(event.x - self.toolsThickness,
+                                           (event.y / 2) - self.toolsThickness,
+                                           (event.x / 2) + self.toolsThickness,
                                            event.y + self.toolsThickness,
                                            fill = self.rgb 
                                            )
