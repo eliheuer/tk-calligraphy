@@ -3,8 +3,8 @@
 
 # Module Imports
 from tkinter import *
-from random  import randint
-import math
+from math import *
+from random import randint
 
 # Layout Variables
 canvasWidth  = 768
@@ -43,6 +43,7 @@ class Application(Frame):
 
         self.pack()
         self.createWidgets()
+        self.createWorkspace()
 
         master.bind('d', self.thicknessPlus)
         master.bind('a', self.thicknessMinus)
@@ -51,76 +52,42 @@ class Application(Frame):
 
     def createWidgets(self):
 
-        self.leftFrame = Frame(self, bg = widgetsBgColor)
-        self.leftFrame.pack(side = LEFT, fill = Y)
+        self.leftFrame = Frame(self)
+        self.leftFrame.pack(side=LEFT, fill=Y)
 
-        self.label = Label(self.leftFrame, text = "choose a RGB color: ", fg="red")
-        self.label.grid(row = 0, column = 0, sticky = NW, pady = 2, padx = 3)
+        self.labelTools = Label(self.leftFrame,
+                                text = "chose a drawing tool:",)
 
-        #-----------------------------------------------
-        self.entryFrame = Frame(self.leftFrame)
-        self.entryFrame.grid(row = 1, column = 0,
-                              sticky = NW, pady = pady, padx = padx)
-
-        self.myEntry1 = Entry(self.entryFrame, width = 4, insertwidth = padx)
-        self.myEntry1.pack(side = LEFT, pady = pady, padx = 4)
-
-        self.myEntry2 = Entry(self.entryFrame, width = 4)
-        self.myEntry2.pack(side = LEFT, pady = pady, padx =padx)
-
-        self.myEntry3 = Entry(self.entryFrame, width = 4)
-        self.myEntry3.pack(side = LEFT, pady = pady, padx = padx)
-        #----------------------------------------------
-        self.bttn1 = Button(self.leftFrame,
-                            text = "Set Color", command = self.setColor)
-        self.bttn1.grid(row = 2, column = 0, pady = 2, padx = 3, sticky = NW)
-
-        self.labelThickness = Label(
-                            self.leftFrame,
-                            text = "drawing tools' thickness:")
-        self.labelThickness.grid(row = 4,
-                                 column = 0, pady = 2, padx = 3)
-         
-        self.myScale = Scale(
-                            self.leftFrame, from_ = 1, to = 25,
-                            orient = HORIZONTAL,
-                            command = self.setThickness
-                            )
-
-        self.myScale.set(25)
-        self.toolsThickness = 25
-        self.myScale.grid(
-                          row = 5, column = 0,
-                          pady = 2, padx = 3, sticky = S,
-                          )
-
-        self.labelTools = Label(
-                                self.leftFrame,
-                                text = "chose a drawing tool:",
-                                bg = mediumGray
-                                )
         self.labelTools.grid(
                              row = 6, column = 0,
                              pady = pady, padx = padx,
-                             sticky = NW
-                             )
+                             sticky = NW)
 
         Radiobutton(self.leftFrame,
                     text = "Bamboo",
-                    bg = mediumGray,
+                    # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 1).grid(padx = padx, pady = pady,
                                     row = 7, column = 0,
-                                    sticky = NW,
-                                    )
+                                    sticky = NW,)
+
         Radiobutton(self.leftFrame,
                     text = "Magic #1",
-                    bg = mediumGray,
+                    # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 2).grid(padx = padx, pady = pady,
                                     row = 8, column = 0,
+                                    sticky = NW)
+
+        Radiobutton(self.leftFrame,
+                    text = "Box",
+                    # bg = lightGray,
+                    variable = self.radiobuttonValue,
+                    value = 3).grid(padx = padx, pady = pady,
+                                    row = 9, column = 0,
                                     sticky = NW
                                     )
+
 
         self.buttonDeleteAll = Button(self.leftFrame, text = "clear paper",
                                       command = self.delteAll)
@@ -128,19 +95,16 @@ class Application(Frame):
                                     row = 11, column = 0,
                                     sticky = NW)
 
-
-#----------------------------------------------------------------------
+    def createWorkspace(self):
         self.myCanvas = Canvas(self, width = 768,
                                      height = 512, 
                                      relief=FLAT, 
                                      borderwidth=0, 
-                                     bg=lightestGray
+                                     bg=lightGray
                                      )
         self.myCanvas.pack(side = RIGHT)
         self.myCanvas.bind("<B1-Motion>", self.draw)
         self.myCanvas.bind("<Button-1>", self.setPreviousXY)
-#----------------------------------------------------------------------
-
 
     def setThickness(self, event):
         print(self.myScale.get())
@@ -170,15 +134,16 @@ class Application(Frame):
 
     # Drawing Tools
     def draw(self, event):
-        
+
         # Bamboo
         if self.radiobuttonValue.get() == 1:
-            self.myCanvas.create_rectangle(event.x - self.toolsThickness,
-                                           event.y - self.toolsThickness,
-                                           event.x + self.toolsThickness,
-                                           event.y + self.toolsThickness,
-                                           fill = self.rgb 
-                                           )
+            self.myCanvas.create_polygon(0,0,50,50,100,100,150,150,0,0,
+                                         event.x - self.toolsThickness,
+                                         event.y - self.toolsThickness,
+                                         event.x + self.toolsThickness,
+                                         event.y + self.toolsThickness,
+                                         fill = self.rgb 
+                                         )
 
         # Magic
         if self.radiobuttonValue.get() == 2:
@@ -188,6 +153,15 @@ class Application(Frame):
                                           event.y + self.toolsThickness,
                                           fill = self.rgb 
                                           )
+
+        # box
+        if self.radiobuttonValue.get() == 3:
+            self.myCanvas.create_rectangle(event.x - self.toolsThickness,
+                                           event.y - self.toolsThickness,
+                                           event.x + self.toolsThickness,
+                                           event.y + self.toolsThickness,
+                                           fill = self.rgb 
+                                           )
 
     def delteAll(self):
         self.myCanvas.delete("all")
