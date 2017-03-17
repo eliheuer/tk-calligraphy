@@ -77,7 +77,7 @@ class Application(Frame):
                                     sticky = NW,)
 
         Radiobutton(self.leftFrame,
-                    text = "Magic #1",
+                    text = "Magic",
                     # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 2).grid(padx = padx, pady = pady,
@@ -93,7 +93,7 @@ class Application(Frame):
                                     sticky = NW)
 
         Radiobutton(self.leftFrame,
-                    text = "Rainbow",
+                    text = "Rainbow Box",
                     # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 4).grid(padx = padx, pady = pady,
@@ -151,14 +151,19 @@ class Application(Frame):
             self.myCanvas.create_polygon(
                                          ((event.x +  0) +  0),       # X1
                                          ((event.y +  0) +  0),       # Y1
+
                                          ((event.x + 20) +  0),       # X2
-                                         ((event.y +  0) +  0),       # Y2
-                                         ((event.x +  0) + 30),       # X1
-                                         ((event.y +  0) + 30),       # Y1
-                                         ((event.x + 20) + 60),       # X2
-                                         ((event.y +  0) + 60),       # Y2
+                                         ((event.y + 10) +  0),       # Y2
+
+                                         ((event.x + 20) -  20),      # X3
+                                         ((event.y + 10) +  60),      # Y3
+
+                                         ((event.x +  0) -  40),      # X4
+                                         ((event.y + 20) +  50),      # Y4
+
                                          ((event.x +  0) +  0),       # X1
                                          ((event.y +  0) +  0),       # Y1
+
                                          fill = self.rgb,
                                          outline = "black",
                                          )
