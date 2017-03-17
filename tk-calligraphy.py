@@ -1,36 +1,35 @@
 #!/usr/bin/env python3
 # For Python2 use Tkinter instead of tkinter
 
-# Module Imports
 from tkinter import *
 from math import *
 import random
 
 # Layout Variables
-canvasWidth  = 768
-canvasHeight = 512 
+canvasWidth = 768
+canvasHeight = 512
 padx = 2
 pady = 2
 
 # Color Variables
 lightestGray = "#%02x%02x%02x" % (230, 230, 230)
-lightGray    = "#%02x%02x%02x" % (200, 200, 200)
-mediumGray   = "#%02x%02x%02x" % (150, 150, 150)
-darkGray     = "#%02x%02x%02x" % (100, 100, 100)
-darkestGray  = "#%02x%02x%02x" % ( 50,  50,  50)
-colorRed     = "#%02x%02x%02x" % (250,  50,  50)
-colorOrange  = "#%02x%02x%02x" % (250, 100,  50)
-colorYellow  = "#%02x%02x%02x" % (255, 200,  50)
-colorGreen   = "#%02x%02x%02x" % (150, 250, 230)
-colorBlue    = "#%02x%02x%02x" % (230, 230, 230)
-colorPurple  = "#%02x%02x%02x" % ( 30,  30, 250)
-colorRandom  = "#%02x%02x%02x" % (random.randint(1, 255),
-                                  random.randint(1, 255),
-                                  random.randint(1, 255))
+lightGray = "#%02x%02x%02x" % (200, 200, 200)
+mediumGray = "#%02x%02x%02x" % (150, 150, 150)
+darkGray = "#%02x%02x%02x" % (100, 100, 100)
+darkestGray = "#%02x%02x%02x" % (50, 50, 50)
+colorRed = "#%02x%02x%02x" % (250, 50, 50)
+colorOrange = "#%02x%02x%02x" % (250, 100, 50)
+colorYellow = "#%02x%02x%02x" % (255, 200, 50)
+colorGreen = "#%02x%02x%02x" % (150, 250, 230)
+colorBlue = "#%02x%02x%02x" % (230, 230, 230)
+colorPurple = "#%02x%02x%02x" % (30, 30, 250)
+colorRandom = "#%02x%02x%02x" % (random.randint(1, 255),
+                                 random.randint(1, 255),
+                                 random.randint(1, 255))
 
 # Default Settings
 brushStartColor = colorRed
-widgetsBgColor  = lightGray 
+widgetsBgColor  = lightGray
 
 # Wip
 center = (canvasWidth / 2), (canvasHeight / 2)
@@ -77,15 +76,15 @@ class Application(Frame):
                                     sticky = NW,)
 
         Radiobutton(self.leftFrame,
-                    text = "Magic",
+                    text = "Bamboo +",
                     # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 2).grid(padx = padx, pady = pady,
                                     row = 2, column = 0,
-                                    sticky = NW)
+                                    sticky = NW,)
 
         Radiobutton(self.leftFrame,
-                    text = "Box",
+                    text = "Magic",
                     # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 3).grid(padx = padx, pady = pady,
@@ -93,18 +92,26 @@ class Application(Frame):
                                     sticky = NW)
 
         Radiobutton(self.leftFrame,
-                    text = "Rainbow Box",
+                    text = "Box",
                     # bg = lightGray,
                     variable = self.radiobuttonValue,
                     value = 4).grid(padx = padx, pady = pady,
                                     row = 4, column = 0,
                                     sticky = NW)
 
+        Radiobutton(self.leftFrame,
+                    text = "Rainbow Box",
+                    # bg = lightGray,
+                    variable = self.radiobuttonValue,
+                    value = 5).grid(padx = padx, pady = pady,
+                                    row = 5, column = 0,
+                                    sticky = NW)
+
 
         self.buttonDeleteAll = Button(self.leftFrame, text = "clear paper",
                                       command = self.delteAll)
-        self.buttonDeleteAll.grid(padx = padx, pady = pady,
-                                    row = 11, column = 0,
+        self.buttonDeleteAll.grid(padx = padx, pady = (pady * 8),
+                                    row = 6, column = 0,
                                     sticky = NW)
 
     def createWorkspace(self):
@@ -152,14 +159,14 @@ class Application(Frame):
                                          ((event.x +  0) +  0),       # X1
                                          ((event.y +  0) +  0),       # Y1
 
-                                         ((event.x + 20) +  0),       # X2
-                                         ((event.y + 10) +  0),       # Y2
+                                         ((event.x + 5) +  0),       # X2
+                                         ((event.y + 5) +  0),       # Y2
 
-                                         ((event.x + 20) -  20),      # X3
-                                         ((event.y + 10) +  60),      # Y3
+                                         ((event.x +  0) -  25),      # X3
+                                         ((event.y +  0) +  70),      # Y3
 
-                                         ((event.x +  0) -  40),      # X4
-                                         ((event.y + 20) +  50),      # Y4
+                                         ((event.x - 5) -  25),      # X4
+                                         ((event.y - 5) +  70),      # Y4
 
                                          ((event.x +  0) +  0),       # X1
                                          ((event.y +  0) +  0),       # Y1
@@ -167,18 +174,39 @@ class Application(Frame):
                                          fill = self.rgb,
                                          outline = "black",
                                          )
+        # Bamboo +
+        if self.radiobuttonValue.get() == 2:
+            self.myCanvas.create_polygon(
+                                         ((event.x +  0) +  0),       # X1
+                                         ((event.y +  0) +  0),       # Y1
+
+                                         ((event.x + 5) +  0),       # X2
+                                         ((event.y + 5) +  0),       # Y2
+
+                                         ((event.x +  0) -  25),      # X3
+                                         ((event.y +  0) +  70),      # Y3
+
+                                         ((event.x - 5) -  25),      # X4
+                                         ((event.y - 5) +  70),      # Y4
+
+                                         ((event.x +  0) +  0),       # X1
+                                         ((event.y +  0) +  0),       # Y1
+
+                                         fill = "black",
+                                         outline = "black",
+                                         )
 
         # Magic
-        if self.radiobuttonValue.get() == 2:
+        if self.radiobuttonValue.get() == 3:
             self.myCanvas.create_rectangle(event.x - self.toolsThickness,
                                           (event.y / 2) - self.toolsThickness,
                                           (event.x / 2) + self.toolsThickness,
                                           event.y + self.toolsThickness,
-                                          fill = self.rgb 
+                                          fill = darkGray
                                           )
 
         # box
-        if self.radiobuttonValue.get() == 3:
+        if self.radiobuttonValue.get() == 4:
             self.myCanvas.create_rectangle(event.x - self.toolsThickness,
                                            event.y - self.toolsThickness,
                                            event.x + self.toolsThickness,
@@ -187,7 +215,7 @@ class Application(Frame):
                                            )
 
         # box
-        if self.radiobuttonValue.get() == 4:
+        if self.radiobuttonValue.get() == 5:
             self.myCanvas.create_rectangle(event.x - self.toolsThickness,
                                            event.y - self.toolsThickness,
                                            event.x + self.toolsThickness,
@@ -209,8 +237,8 @@ class Application(Frame):
 
     def rainbowBrush(self, event):
         self.colorRandom  = "#%02x%02x%02x" % (random.randint(1, 255),
-                                          random.randint(1, 255),
-                                          random.randint(1, 255)) 
+                                               random.randint(1, 255),
+                                               random.randint(1, 255)) 
 
     def rotateBrush(self, event):
         # rotate the brush 
