@@ -23,7 +23,7 @@ colorYellow = "#%02x%02x%02x" % (255, 200, 50)
 colorGreen = "#%02x%02x%02x" % (150, 250, 230)
 colorBlue = "#%02x%02x%02x" % (230, 230, 230)
 colorPurple = "#%02x%02x%02x" % (30, 30, 250)
-colorRandom = "#%02x%02x%02x" % (random.randint(1, 255),
+color_random = "#%02x%02x%02x" % (random.randint(1, 255),
                                  random.randint(1, 255),
                                  random.randint(1, 255))
 
@@ -41,18 +41,20 @@ class Application(Frame):
         super().__init__(master)
         self.radiobuttonValue = IntVar()
         self.radiobuttonValue.set(1)
-        self.toolsThickness = 25
+        self.brush_size = 25
         self.rgb = brushStartColor
 
         self.pack()
         self.createWidgets()
         self.createWorkspace()
 
-        master.bind('d', self.thicknessPlus)
-        master.bind('a', self.thicknessMinus)
-        master.bind('s', self.rotateBrush)
-        master.bind('w', self.rotateBrush)
-        master.bind('r', self.rainbowBrush)
+
+
+        # master.bind('d', self.thicknessPlus)
+        # master.bind('a', self.thicknessMinus)
+        master.bind('d', self.decrease_brush_size)
+        master.bind('a', self.decrease_brush_size)
+        master.bind('r', self.rainbow_brush)
 
     def createWidgets(self):
 
@@ -108,7 +110,7 @@ class Application(Frame):
                                     sticky = NW)
 
 
-        self.buttonDeleteAll = Button(self.leftFrame, text = "clear paper",
+        self.buttonDeleteAll = Button(self.leftFrame, text = "Clear Workspace",
                                       command = self.delteAll)
         self.buttonDeleteAll.grid(padx = padx, pady = (pady * 8),
                                     row = 6, column = 0,
@@ -127,7 +129,7 @@ class Application(Frame):
 
     def setThickness(self, event):
         print(self.myScale.get())
-        self.toolsThickness = self.myScale.get()
+        self.brush_size = self.myScale.get()
 
     def setColor(self):
         try:
@@ -163,15 +165,15 @@ class Application(Frame):
                                          ((event.y + 5) +  0),       # Y2
 
                                          ((event.x +  0) -  25),      # X3
-                                         ((event.y +  0) +  70),      # Y3
+                                         ((event.y +  0) +  20),      # Y3
 
                                          ((event.x - 5) -  25),      # X4
-                                         ((event.y - 5) +  70),      # Y4
+                                         ((event.y - 5) +  20),      # Y4
 
                                          ((event.x +  0) +  0),       # X1
                                          ((event.y +  0) +  0),       # Y1
 
-                                         fill = colorRandom,
+                                         fill = color_random,
                                          outline = "blue",
                                          )
         # Bamboo +
@@ -198,51 +200,47 @@ class Application(Frame):
 
         # Magic
         if self.radiobuttonValue.get() == 3:
-            self.myCanvas.create_rectangle(event.x - self.toolsThickness,
-                                          (event.y / 2) - self.toolsThickness,
-                                          (event.x / 2) + self.toolsThickness,
-                                          event.y + self.toolsThickness,
+            self.myCanvas.create_rectangle(event.x - self.brush_size,
+                                          (event.y / 2) - self.brush_size,
+                                          (event.x / 2) + self.brush_size,
+                                          event.y + self.brush_size,
                                           fill = darkGray
                                           )
 
         # box
         if self.radiobuttonValue.get() == 4:
-            self.myCanvas.create_rectangle(event.x - self.toolsThickness,
-                                           event.y - self.toolsThickness,
-                                           event.x + self.toolsThickness,
-                                           event.y + self.toolsThickness,
+            self.myCanvas.create_rectangle(event.x - self.brush_size,
+                                           event.y - self.brush_size,
+                                           event.x + self.brush_size,
+                                           event.y + self.brush_size,
                                            fill = self.rgb 
                                            )
 
         # box
         if self.radiobuttonValue.get() == 5:
-            self.myCanvas.create_rectangle(event.x - self.toolsThickness,
-                                           event.y - self.toolsThickness,
-                                           event.x + self.toolsThickness,
-                                           event.y + self.toolsThickness,
-                                           fill = colorRandom)
+            self.myCanvas.create_rectangle(event.x - self.brush_size,
+                                           event.y - self.brush_size,
+                                           event.x + self.brush_size,
+                                           event.y + self.brush_size,
+                                           fill = color_random)
 
     def delteAll(self):
         self.myCanvas.delete("all")
 
-    def thicknessPlus(self, event):
-        if self.toolsThickness < 25:
-            self.toolsThickness += 1
-            self.myScale.set(self.toolsThickness)
+    def increase_brush_size(self, event):
+        if self.brush_size < 25:
+            self.brush_size += 1
+            self.myScale.set(self.brush_size)
 
-    def thicknessMinus(self, event):
-        if 1 < self.toolsThickness:
-            self.toolsThickness -= 1
-            self.myScale.set(self.toolsThickness)
+    def decrease_brush_size(self, event):
+        if 1 < self.brush_size:
+            self.brush_size -= 1
+            self.myScale.set(self.brush_size)
 
-    def rainbowBrush(self, event):
-        self.colorRandom  = "#%02x%02x%02x" % (random.randint(1, 255),
+    def rainbow_brush(self, event):
+        self.color_random  = "#%02x%02x%02x" % (random.randint(1, 255),
                                                random.randint(1, 255),
                                                random.randint(1, 255)) 
-
-    def rotateBrush(self, event):
-        # rotate the brush 
-        print ("rotate!")
 
 root = Tk()
 root.title("Tk Calligraphy")
