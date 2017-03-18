@@ -12,24 +12,24 @@ padx = 2
 pady = 2
 
 # Color Variables
-lightestGray = "#%02x%02x%02x" % (230, 230, 230)
-lightGray = "#%02x%02x%02x" % (200, 200, 200)
-mediumGray = "#%02x%02x%02x" % (150, 150, 150)
-darkGray = "#%02x%02x%02x" % (100, 100, 100)
-darkestGray = "#%02x%02x%02x" % (50, 50, 50)
-colorRed = "#%02x%02x%02x" % (250, 50, 50)
-colorOrange = "#%02x%02x%02x" % (250, 100, 50)
-colorYellow = "#%02x%02x%02x" % (255, 200, 50)
-colorGreen = "#%02x%02x%02x" % (150, 250, 230)
-colorBlue = "#%02x%02x%02x" % (230, 230, 230)
-colorPurple = "#%02x%02x%02x" % (30, 30, 250)
+lightest_gray = "#%02x%02x%02x" % (230, 230, 230)
+light_gray = "#%02x%02x%02x" % (200, 200, 200)
+medium_gray = "#%02x%02x%02x" % (150, 150, 150)
+dark_gray = "#%02x%02x%02x" % (100, 100, 100)
+darkest_gray = "#%02x%02x%02x" % (50, 50, 50)
+color_red = "#%02x%02x%02x" % (250, 50, 50)
+color_orange = "#%02x%02x%02x" % (250, 100, 50)
+color_yellow = "#%02x%02x%02x" % (255, 200, 50)
+color_green = "#%02x%02x%02x" % (150, 250, 230)
+color_blue = "#%02x%02x%02x" % (230, 230, 230)
+color_purple = "#%02x%02x%02x" % (30, 30, 250)
 color_random = "#%02x%02x%02x" % (random.randint(1, 255),
-                                 random.randint(1, 255),
-                                 random.randint(1, 255))
+                                  random.randint(1, 255),
+                                  random.randint(1, 255))
 
 # Default Settings
-brushStartColor = colorRed
-widgetsBgColor  = lightGray
+brushStartColor = color_red
+widgetsBgColor  = light_gray
 
 # Wip
 center = (canvasWidth / 2), (canvasHeight / 2)
@@ -55,6 +55,7 @@ class Application(Frame):
         master.bind('d', self.decrease_brush_size)
         master.bind('a', self.decrease_brush_size)
         master.bind('r', self.rainbow_brush)
+        master.bind('c', self.clear_workspace)
 
     def createWidgets(self):
 
@@ -62,7 +63,8 @@ class Application(Frame):
         self.leftFrame.pack(side=LEFT, fill=Y)
 
         self.labelTools = Label(self.leftFrame,
-                                text = "Choose a drawing tool :")
+                                pady = 8,
+                                text = "Choose a brush:     ")
 
         self.labelTools.grid(
                              row = 0, column = 0,
@@ -109,19 +111,12 @@ class Application(Frame):
                                     row = 5, column = 0,
                                     sticky = NW)
 
-
-        self.buttonDeleteAll = Button(self.leftFrame, text = "Clear Workspace",
-                                      command = self.delteAll)
-        self.buttonDeleteAll.grid(padx = padx, pady = (pady * 8),
-                                    row = 6, column = 0,
-                                    sticky = NW)
-
     def createWorkspace(self):
         self.myCanvas = Canvas(self, width = 768,
                                      height = 512, 
                                      relief=FLAT, 
                                      borderwidth=0, 
-                                     bg=lightGray
+                                     bg=light_gray
                                      )
         self.myCanvas.pack(side = RIGHT)
         self.myCanvas.bind("<B1-Motion>", self.draw)
@@ -224,7 +219,7 @@ class Application(Frame):
                                            event.y + self.brush_size,
                                            fill = color_random)
 
-    def delteAll(self):
+    def clear_workspace(self, event):
         self.myCanvas.delete("all")
 
     def increase_brush_size(self, event):
