@@ -171,8 +171,8 @@ class Application(Frame):
                                          ((event.x +  0) +  0),       # X1
                                          ((event.y +  0) +  0),       # Y1
 
-                                         fill = self.rgb,
-                                         outline = "black",
+                                         fill = colorRandom,
+                                         outline = "blue",
                                          )
         # Bamboo +
         if self.radiobuttonValue.get() == 2:
