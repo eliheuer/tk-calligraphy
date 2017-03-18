@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# For Python2 use Tkinter instead of tkinter
 
 from tkinter import *
 from math import *
