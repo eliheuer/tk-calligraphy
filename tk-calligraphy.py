@@ -5,8 +5,8 @@ from math import *
 import random
 
 # Layout Variables
-canvasWidth = 768
-canvasHeight = 512
+canvasWidth = 512
+canvasHeight = 1024
 padx = 2
 pady = 2
 
@@ -33,7 +33,6 @@ widgetsBgColor  = light_gray
 # Wip
 center = (canvasWidth / 2), (canvasHeight / 2)
 
-
 class Application(Frame):
 
     def __init__(self, master):
@@ -46,8 +45,6 @@ class Application(Frame):
         self.pack()
         self.createWidgets()
         self.createWorkspace()
-
-
 
         # master.bind('d', self.thicknessPlus)
         # master.bind('a', self.thicknessMinus)
@@ -66,9 +63,9 @@ class Application(Frame):
                                 text = "Choose a brush:     ")
 
         self.labelTools.grid(
-                             row = 0, column = 0,
-                             pady = pady, padx = padx,
-                             sticky = NW)
+            row = 0, column = 0,
+            pady = pady, padx = padx,
+            sticky = NW)
 
         Radiobutton(self.leftFrame,
                     text = "Bamboo",
@@ -112,10 +109,10 @@ class Application(Frame):
 
     def createWorkspace(self):
         self.myCanvas = Canvas(self, width = 768,
-                                     height = 512, 
+                                     height = 1024, 
                                      relief=FLAT, 
                                      borderwidth=0, 
-                                     bg=light_gray
+                                     bg=lightest_gray,
                                      )
         self.myCanvas.pack(side = RIGHT)
         self.myCanvas.bind("<B1-Motion>", self.draw)
@@ -138,7 +135,6 @@ class Application(Frame):
 
         except ValueError:
             print("That's not an int!")
-        # set focus to something else, not to mess with pressing keys: a,s
         self.focus()
 
     def setPreviousXY(self, event):
@@ -148,49 +144,38 @@ class Application(Frame):
 
     # Drawing Tools
     def draw(self, event):
-
         # Bamboo
         if self.radiobuttonValue.get() == 1:
             self.myCanvas.create_polygon(
-                                         ((event.x +  0) +  0),       # X1
-                                         ((event.y +  0) +  0),       # Y1
-
-                                         ((event.x + 5) +  0),       # X2
-                                         ((event.y + 5) +  0),       # Y2
-
-                                         ((event.x +  0) -  25),      # X3
-                                         ((event.y +  0) +  20),      # Y3
-
-                                         ((event.x - 5) -  25),      # X4
-                                         ((event.y - 5) +  20),      # Y4
-
-                                         ((event.x +  0) +  0),       # X1
-                                         ((event.y +  0) +  0),       # Y1
-
-                                         fill = color_random,
-                                         outline = "blue",
-                                         )
+                ((event.x +  0) +   0), # X1
+                ((event.y +  0) +   0), # Y1
+                ((event.x +  5) +   0), # X2
+                ((event.y +  5) +   0), # Y2
+                ((event.x +  0) -  30), # X3
+                ((event.y +  0) +  40), # Y3
+                ((event.x -  5) -  30), # X4
+                ((event.y -  5) +  40), # Y4
+                ((event.x +  0) +   0), # X1
+                ((event.y +  0) +   0), # Y1
+                fill = color_random,
+                outline = "purple",
+                )
         # Bamboo +
         if self.radiobuttonValue.get() == 2:
             self.myCanvas.create_polygon(
-                                         ((event.x +  0) +  0),       # X1
-                                         ((event.y +  0) +  0),       # Y1
-
-                                         ((event.x + 5) +  0),       # X2
-                                         ((event.y + 5) +  0),       # Y2
-
-                                         ((event.x +  0) -  25),      # X3
-                                         ((event.y +  0) +  70),      # Y3
-
-                                         ((event.x - 5) -  25),      # X4
-                                         ((event.y - 5) +  70),      # Y4
-
-                                         ((event.x +  0) +  0),       # X1
-                                         ((event.y +  0) +  0),       # Y1
-
-                                         fill = "black",
-                                         outline = "black",
-                                         )
+                ((event.x +  0) +   0), # X1
+                ((event.y +  0) +   0), # Y1
+                ((event.x +  5) +   0), # X2
+                ((event.y +  5) +   0), # Y2
+                ((event.x +  0) -  20), # X3
+                ((event.y +  0) +  60), # Y3
+                ((event.x -  5) -  20), # X4
+                ((event.y -  5) +  60), # Y4
+                ((event.x +  0) +   0), # X1
+                ((event.y +  0) +   0), # Y1
+                fill = color_random,
+                outline = "purple",
+                )
 
         # Magic
         if self.radiobuttonValue.get() == 3:
